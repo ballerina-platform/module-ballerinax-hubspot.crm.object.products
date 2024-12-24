@@ -10,6 +10,12 @@
 
 [//]: # (TODO: Add overview mentioning the purpose of the module, supported REST API versions, and other high-level details.)
 
+[HubSpot](https://www.hubspot.com/our-story) is an AI-powered customer platform with all the software, integrations, and resources needed to connect marketing, sales, and customer service. 
+
+The `ballerinax/hubspot.crm.object.products` package offers APIs to connect and interact with [HubSpot API for CRM Object Products](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot CRM Object Products API v3 OpenAPI spec](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
+
+Use the products API to create and manage your product library, which is the collection of goods and services that your company offers. Products in your product library can be used as line items when creating deals, payment links, invoices, and quotes.
+
 ## Setup guide
 
 [//]: # (TODO: Add detailed steps to obtain credentials and configure the module.)
@@ -22,7 +28,7 @@
 
 The `Ballerina HubSpot CRM Products Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/), covering the following use cases:
 
-[//]: # (TODO: Add examples)
+[//]: # (TODO: Add examexport packageUser=ples)
 
 ## Build from the source
 
