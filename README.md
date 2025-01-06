@@ -13,7 +13,7 @@
 
 [HubSpot](https://www.hubspot.com/our-story) is an AI-powered customer relationship management (CRM) platform.  
 
-The `ballerinax/hubspot.crm.object.products` package offers APIs to connect and interact with [HubSpot API for CRM Object Products](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot CRM Object Products API v3 OpenAPI spec](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
+The `ballerinax/hubspot.crm.obj.products` package offers APIs to connect and interact with [HubSpot API for CRM Object Products](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot CRM Object Products API v3 OpenAPI spec](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
 
 Use the products API to create and manage your product library, which is the collection of goods and services that your company offers. Products in your product library can be used as line items when creating deals, payment links, invoices, and quotes.
 
