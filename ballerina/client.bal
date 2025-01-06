@@ -11,7 +11,7 @@ public isolated client class Client {
     # + config - The configurations to be used when initializing the `connector` 
     # + serviceUrl - URL of the target service 
     # + return - An error if connector initialization failed 
-    public isolated function init(ConnectionConfig config, string serviceUrl = "https://api.hubapi.com") returns error? {
+    public isolated function init(ConnectionConfig config, string serviceUrl = "https://api.hubapi.com/crm/v3/objects/products") returns error? {
         http:ClientConfiguration httpClientConfig = {httpVersion: config.httpVersion, timeout: config.timeout, forwarded: config.forwarded, poolConfig: config.poolConfig, compression: config.compression, circuitBreaker: config.circuitBreaker, retryConfig: config.retryConfig, validation: config.validation};
         do {
             if config.http1Settings is ClientHttp1Settings {
@@ -49,8 +49,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    resource isolated function delete crm/v3/objects/products/[string productId](map<string|string[]> headers = {}) returns http:Response|error {
-        string resourcePath = string `/crm/v3/objects/products/${getEncodedUri(productId)}`;
+    resource isolated function delete [string productId](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/${getEncodedUri(productId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -64,8 +64,8 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    resource isolated function get crm/v3/objects/products(map<string|string[]> headers = {}, *GetCrmV3ObjectsProducts_getpageQueries queries) returns CollectionResponseSimplePublicObjectWithAssociationsForwardPaging|error {
-        string resourcePath = string `/crm/v3/objects/products`;
+    resource isolated function get .(map<string|string[]> headers = {}, *Get_getpageQueries queries) returns CollectionResponseSimplePublicObjectWithAssociationsForwardPaging|error {
+        string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -81,8 +81,8 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    resource isolated function get crm/v3/objects/products/[string productId](map<string|string[]> headers = {}, *GetCrmV3ObjectsProductsProductid_getbyidQueries queries) returns SimplePublicObjectWithAssociations|error {
-        string resourcePath = string `/crm/v3/objects/products/${getEncodedUri(productId)}`;
+    resource isolated function get [string productId](map<string|string[]> headers = {}, *GetProductid_getbyidQueries queries) returns SimplePublicObjectWithAssociations|error {
+        string resourcePath = string `/${getEncodedUri(productId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -98,8 +98,8 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    resource isolated function patch crm/v3/objects/products/[string productId](SimplePublicObjectInput payload, map<string|string[]> headers = {}, *PatchCrmV3ObjectsProductsProductid_updateQueries queries) returns SimplePublicObject|error {
-        string resourcePath = string `/crm/v3/objects/products/${getEncodedUri(productId)}`;
+    resource isolated function patch [string productId](SimplePublicObjectInput payload, map<string|string[]> headers = {}, *PatchProductid_updateQueries queries) returns SimplePublicObject|error {
+        string resourcePath = string `/${getEncodedUri(productId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -116,8 +116,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products(SimplePublicObjectInputForCreate payload, map<string|string[]> headers = {}) returns SimplePublicObject|error {
-        string resourcePath = string `/crm/v3/objects/products`;
+    resource isolated function post .(SimplePublicObjectInputForCreate payload, map<string|string[]> headers = {}) returns SimplePublicObject|error {
+        string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -133,8 +133,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    resource isolated function post crm/v3/objects/products/batch/archive(BatchInputSimplePublicObjectId payload, map<string|string[]> headers = {}) returns http:Response|error {
-        string resourcePath = string `/crm/v3/objects/products/batch/archive`;
+    resource isolated function post batch/archive(BatchInputSimplePublicObjectId payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/batch/archive`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -150,8 +150,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products/batch/create(BatchInputSimplePublicObjectInputForCreate payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
-        string resourcePath = string `/crm/v3/objects/products/batch/create`;
+    resource isolated function post batch/create(BatchInputSimplePublicObjectInputForCreate payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
+        string resourcePath = string `/batch/create`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -168,8 +168,8 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products/batch/read(BatchReadInputSimplePublicObjectId payload, map<string|string[]> headers = {}, *PostCrmV3ObjectsProductsBatchRead_readQueries queries) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
-        string resourcePath = string `/crm/v3/objects/products/batch/read`;
+    resource isolated function post batch/read(BatchReadInputSimplePublicObjectId payload, map<string|string[]> headers = {}, *PostBatchRead_readQueries queries) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
+        string resourcePath = string `/batch/read`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -186,8 +186,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products/batch/update(BatchInputSimplePublicObjectBatchInput payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
-        string resourcePath = string `/crm/v3/objects/products/batch/update`;
+    resource isolated function post batch/update(BatchInputSimplePublicObjectBatchInput payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicObject|BatchResponseSimplePublicObjectWithErrors|error {
+        string resourcePath = string `/batch/update`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -203,8 +203,8 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products/batch/upsert(BatchInputSimplePublicObjectBatchInputUpsert payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicUpsertObject|BatchResponseSimplePublicUpsertObjectWithErrors|error {
-        string resourcePath = string `/crm/v3/objects/products/batch/upsert`;
+    resource isolated function post batch/upsert(BatchInputSimplePublicObjectBatchInputUpsert payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicUpsertObject|BatchResponseSimplePublicUpsertObjectWithErrors|error {
+        string resourcePath = string `/batch/upsert`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;
@@ -218,8 +218,8 @@ public isolated client class Client {
 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    resource isolated function post crm/v3/objects/products/search(PublicObjectSearchRequest payload, map<string|string[]> headers = {}) returns CollectionResponseWithTotalSimplePublicObjectForwardPaging|error {
-        string resourcePath = string `/crm/v3/objects/products/search`;
+    resource isolated function post search(PublicObjectSearchRequest payload, map<string|string[]> headers = {}) returns CollectionResponseWithTotalSimplePublicObjectForwardPaging|error {
+        string resourcePath = string `/search`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
             headerValues["private-app-legacy"] = self.apiKeyConfig?.private\-app\-legacy;

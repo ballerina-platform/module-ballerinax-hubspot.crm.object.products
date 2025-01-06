@@ -19,6 +19,26 @@ public type CollectionResponseAssociatedId record {
     AssociatedId[] results;
 };
 
+# Represents the Queries record for the operation: patch-/{productId}_update
+public type PatchProductid_updateQueries record {
+    # The name of a property whose values are unique for this object.
+    string idProperty?;
+};
+
+# Represents the Queries record for the operation: get-/{productId}_getById
+public type GetProductid_getbyidQueries record {
+    # A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored.
+    string[] associations?;
+    # Whether to return only results that have been archived.
+    boolean archived = false;
+    # A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored.
+    string[] propertiesWithHistory?;
+    # The name of a property whose values are unique for this object
+    string idProperty?;
+    # A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored.
+    string[] properties?;
+};
+
 public type PublicAssociationsForObject record {
     AssociationSpec[] types;
     PublicObjectId to;
@@ -37,12 +57,6 @@ public type FilterGroup record {
     Filter[] filters;
 };
 
-# Represents the Queries record for the operation: post-/crm/v3/objects/products/batch/read_read
-public type PostCrmV3ObjectsProductsBatchRead_readQueries record {
-    # Whether to return only results that have been archived.
-    boolean archived = false;
-};
-
 public type ErrorDetail record {
     # A specific category that contains more specific detail about the error
     string subCategory?;
@@ -54,22 +68,6 @@ public type ErrorDetail record {
     record {|string[]...;|} context?;
     # A human readable message describing the error along with remediation steps where appropriate
     string message;
-};
-
-# Represents the Queries record for the operation: get-/crm/v3/objects/products_getPage
-public type GetCrmV3ObjectsProducts_getpageQueries record {
-    # A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored.
-    string[] associations?;
-    # Whether to return only results that have been archived.
-    boolean archived = false;
-    # A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored. Usage of this parameter will reduce the maximum number of objects that can be read by a single request.
-    string[] propertiesWithHistory?;
-    # The maximum number of results to display per page.
-    int:Signed32 'limit = 10;
-    # The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.
-    string after?;
-    # A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored.
-    string[] properties?;
 };
 
 public type ForwardPaging record {
@@ -108,24 +106,6 @@ public type BatchResponseSimplePublicUpsertObject record {
     "PENDING"|"PROCESSING"|"CANCELED"|"COMPLETE" status;
 };
 
-# Represents the Queries record for the operation: get-/crm/v3/objects/products/{productId}_getById
-public type GetCrmV3ObjectsProductsProductid_getbyidQueries record {
-    # A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored.
-    string[] associations?;
-    # Whether to return only results that have been archived.
-    boolean archived = false;
-    # A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored.
-    string[] propertiesWithHistory?;
-    # The name of a property whose values are unique for this object
-    string idProperty?;
-    # A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored.
-    string[] properties?;
-};
-
-public type BatchInputSimplePublicObjectId record {
-    SimplePublicObjectId[] inputs;
-};
-
 public type ValueWithTimestamp record {
     string sourceId?;
     string sourceType;
@@ -133,6 +113,10 @@ public type ValueWithTimestamp record {
     int:Signed32 updatedByUserId?;
     string value;
     string timestamp;
+};
+
+public type BatchInputSimplePublicObjectId record {
+    SimplePublicObjectId[] inputs;
 };
 
 # OAuth2 Refresh Token Grant Configs
@@ -144,6 +128,22 @@ public type OAuth2RefreshTokenGrantConfig record {|
 
 public type BatchInputSimplePublicObjectBatchInputUpsert record {
     SimplePublicObjectBatchInputUpsert[] inputs;
+};
+
+# Represents the Queries record for the operation: get-_getPage
+public type Get_getpageQueries record {
+    # A comma separated list of object types to retrieve associated IDs for. If any of the specified associations do not exist, they will be ignored.
+    string[] associations?;
+    # Whether to return only results that have been archived.
+    boolean archived = false;
+    # A comma separated list of the properties to be returned along with their history of previous values. If any of the specified properties are not present on the requested object(s), they will be ignored. Usage of this parameter will reduce the maximum number of objects that can be read by a single request.
+    string[] propertiesWithHistory?;
+    # The maximum number of results to display per page.
+    int:Signed32 'limit = 10;
+    # The paging cursor token of the last successfully read resource will be returned as the `paging.next.after` JSON property of a paged response containing more results.
+    string after?;
+    # A comma separated list of the properties to be returned in the response. If any of the specified properties are not present on the requested object(s), they will be ignored.
+    string[] properties?;
 };
 
 public type CollectionResponseWithTotalSimplePublicObjectForwardPaging record {
@@ -252,10 +252,10 @@ public type SimplePublicObjectInput record {
     record {|string...;|} properties;
 };
 
-# Represents the Queries record for the operation: patch-/crm/v3/objects/products/{productId}_update
-public type PatchCrmV3ObjectsProductsProductid_updateQueries record {
-    # The name of a property whose values are unique for this object.
-    string idProperty?;
+# Represents the Queries record for the operation: post-/batch/read_read
+public type PostBatchRead_readQueries record {
+    # Whether to return only results that have been archived.
+    boolean archived = false;
 };
 
 public type CollectionResponseSimplePublicObjectWithAssociationsForwardPaging record {
@@ -303,12 +303,12 @@ public type PreviousPage record {
     string link?;
 };
 
-public type BatchInputSimplePublicObjectInputForCreate record {
-    SimplePublicObjectInputForCreate[] inputs;
-};
-
 public type BatchInputSimplePublicObjectBatchInput record {
     SimplePublicObjectBatchInput[] inputs;
+};
+
+public type BatchInputSimplePublicObjectInputForCreate record {
+    SimplePublicObjectInputForCreate[] inputs;
 };
 
 public type SimplePublicUpsertObject record {

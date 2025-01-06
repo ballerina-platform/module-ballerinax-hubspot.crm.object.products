@@ -19,7 +19,7 @@
       "x-hubspot-introduction" : "Use the products API to create and manage your product library, which is the collection of goods and services that your company offers. Products in your product library can be used as line items when creating deals, payment links, invoices, and quotes."
     },
     "servers" : [ {
-      "url" : "https://api.hubapi.com"
+      "url" : "https://api.hubapi.com/crm/v3/objects/products"
     } ],
     "tags" : [ {
       "name" : "Batch"
@@ -29,11 +29,11 @@
       "name" : "Search"
     } ],
     "paths" : {
-      "/crm/v3/objects/products/batch/read" : {
+      "/batch/read" : {
         "post" : {
           "tags" : [ "Batch" ],
           "summary" : "Read a batch of products by internal ID, or unique property values",
-          "operationId" : "post-/crm/v3/objects/products/batch/read_read",
+          "operationId" : "post-/batch/read_read",
           "parameters" : [ {
             "name" : "archived",
             "in" : "query",
@@ -88,12 +88,12 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/{productId}" : {
+      "/{productId}" : {
         "get" : {
           "tags" : [ "Basic" ],
           "summary" : "Read",
           "description" : "Read an Object identified by `{productId}`. `{productId}` refers to the internal object ID by default, or optionally any unique property value as specified by the `idProperty` query param.  Control what is returned via the `properties` query param.",
-          "operationId" : "get-/crm/v3/objects/products/{productId}_getById",
+          "operationId" : "get-/{productId}_getById",
           "parameters" : [ {
             "name" : "productId",
             "in" : "path",
@@ -189,7 +189,7 @@
           "tags" : [ "Basic" ],
           "summary" : "Archive",
           "description" : "Move an Object identified by `{productId}` to the recycling bin.",
-          "operationId" : "delete-/crm/v3/objects/products/{productId}_archive",
+          "operationId" : "delete-/{productId}_archive",
           "parameters" : [ {
             "name" : "productId",
             "in" : "path",
@@ -219,7 +219,7 @@
           "tags" : [ "Basic" ],
           "summary" : "Update",
           "description" : "Perform a partial update of an Object identified by `{productId}`. `{productId}` refers to the internal object ID by default, or optionally any unique property value as specified by the `idProperty` query param. Provided property values will be overwritten. Read-only and non-existent properties will result in an error. Properties values can be cleared by passing an empty string.",
-          "operationId" : "patch-/crm/v3/objects/products/{productId}_update",
+          "operationId" : "patch-/{productId}_update",
           "parameters" : [ {
             "name" : "productId",
             "in" : "path",
@@ -272,11 +272,11 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/batch/archive" : {
+      "/batch/archive" : {
         "post" : {
           "tags" : [ "Batch" ],
           "summary" : "Archive a batch of products by ID",
-          "operationId" : "post-/crm/v3/objects/products/batch/archive_archive",
+          "operationId" : "post-/batch/archive_archive",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
@@ -304,11 +304,11 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/batch/create" : {
+      "/batch/create" : {
         "post" : {
           "tags" : [ "Batch" ],
           "summary" : "Create a batch of products",
-          "operationId" : "post-/crm/v3/objects/products/batch/create_create",
+          "operationId" : "post-/batch/create_create",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
@@ -352,11 +352,11 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/batch/update" : {
+      "/batch/update" : {
         "post" : {
           "tags" : [ "Batch" ],
           "summary" : "Update a batch of products by internal ID, or unique property values",
-          "operationId" : "post-/crm/v3/objects/products/batch/update_update",
+          "operationId" : "post-/batch/update_update",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
@@ -400,12 +400,12 @@
           } ]
         }
       },
-      "/crm/v3/objects/products" : {
+      "/" : {
         "get" : {
           "tags" : [ "Basic" ],
           "summary" : "List",
           "description" : "Read a page of products. Control what is returned via the `properties` query param.",
-          "operationId" : "get-/crm/v3/objects/products_getPage",
+          "operationId" : "get-_getPage",
           "parameters" : [ {
             "name" : "limit",
             "in" : "query",
@@ -504,7 +504,7 @@
           "tags" : [ "Basic" ],
           "summary" : "Create",
           "description" : "Create a product with the given properties and return a copy of the object, including the ID. Documentation and examples for creating standard products is provided.",
-          "operationId" : "post-/crm/v3/objects/products_create",
+          "operationId" : "post-_create",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
@@ -538,12 +538,12 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/batch/upsert" : {
+      "/batch/upsert" : {
         "post" : {
           "tags" : [ "Batch" ],
           "summary" : "Create or update a batch of products by unique property values",
           "description" : "Create or update records identified by a unique property value as specified by the `idProperty` query param. `idProperty` query param refers to a property whose values are unique for the object.",
-          "operationId" : "post-/crm/v3/objects/products/batch/upsert_upsert",
+          "operationId" : "post-/batch/upsert_upsert",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
@@ -587,10 +587,10 @@
           } ]
         }
       },
-      "/crm/v3/objects/products/search" : {
+      "/search" : {
         "post" : {
           "tags" : [ "Search" ],
-          "operationId" : "post-/crm/v3/objects/products/search_doSearch",
+          "operationId" : "post-/search_doSearch",
           "parameters" : [ ],
           "requestBody" : {
             "content" : {
