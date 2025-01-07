@@ -39,6 +39,7 @@ function setup() returns error? {
     hubspotCrmObjectProducts = check new (hubSpotConfig, serviceUrl);
 }
 
+
 // List a page of products
 @test:Config {dependsOn: [testCreateProducts]}
 function testListProducts() returns error?{
@@ -47,6 +48,7 @@ function testListProducts() returns error?{
     io:println(response);
     test:assertTrue(response?.results.length() > 0, "No products found."); 
 }
+
 
 // Create a product with the given properties and return a copy of the object, including the ID. 
 @test:Config
@@ -59,11 +61,12 @@ function testCreateProducts() returns  error? {
         "price": "540.00",
         "description": "A high-quality coffee grinder that powders excellent coffee."
       }
-};
+    };
     SimplePublicObject response = check hubspotCrmObjectProducts-> /.post(payload);
     newId = response?.id;
     test:assertTrue(response?.id.length() > 0, "No products found."); 
 }
+
 
 // Perform a partial update of an Object identified by {productId}.
 @test:Config 
@@ -73,11 +76,12 @@ function testUpdateProductProperties() returns error?{
     "properties": {
     "price": "600.00",
     "description": "A high-quality coffee grinder that powders coffee. Your ideal grinder for cafes, restaurants and smaller coffeeshops."
-  }
+    }
   };
   SimplePublicObject response = check hubspotCrmObjectProducts-> /[newId].patch(payload);
   test:assertTrue(response?.id.length() >0, "Error response received.");
 }
+
 
 // Read an Object identified by {productId}.
 @test:Config {dependsOn: [testUpdateProductProperties]}
@@ -88,6 +92,7 @@ function testReadProduct() returns error? {
   
 }
 
+
 // Move an Object identified by {productId} to the recycling bin.
 @test:Config {dependsOn: [testCreateProducts, testListProducts, testUpdateProductProperties, testReadProduct]}
 function testDeleteProduct() returns error? {
@@ -95,6 +100,7 @@ function testDeleteProduct() returns error? {
   http:Response response = check hubspotCrmObjectProducts-> /[newId].delete();
   test:assertEquals(response.statusCode, 204);
 }
+
 
 // Create a batch of products
 @test:Config
@@ -108,7 +114,6 @@ function  testCreateBatch() returns error? {
         "description": "An advanced espresso machine for the perfect cup of espresso."
       }
     },
-
     {
       properties: {
         "name": "Tea Kettle",
@@ -117,7 +122,6 @@ function  testCreateBatch() returns error? {
         "description": "A sleek stainless steel kettle for boiling water for tea or coffee."
       }
     },
-
     {
       properties: {
         "name": "French Press",
@@ -137,6 +141,7 @@ function  testCreateBatch() returns error? {
     inputs.push(newRecord);
   }
 }
+
 
 // Archive a batch of products
 @test:Config {dependsOn: [testCreateBatch, testReadBatch, testSearchProduct, testUpdateBatch, testUpsertBatch]}
@@ -205,6 +210,7 @@ function testUpdateBatch() returns error? {
   BatchResponseSimplePublicObject response = check hubspotCrmObjectProducts-> /batch/update.post(payload);
   test:assertTrue(response?.completedAt.length()>0, "Error response received.");
 }
+
 
 // Search and filter products
 @test:Config
