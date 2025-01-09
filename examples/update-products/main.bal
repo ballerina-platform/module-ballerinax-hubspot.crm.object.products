@@ -16,7 +16,7 @@
 
 import ballerina/io;
 import ballerina/oauth2;
-import ballerinax/hubspot.crm.obj.products as products;
+import ballerinax/hubspot.crm.obj.products as hsproducts;
 
 // Configurable values for the API authentication and server details. 
 configurable string clientId = ?;
@@ -26,28 +26,28 @@ configurable string refreshToken = ?;
 public function main() returns error? {
 
     // OAuth2 configuration for refreshing the authentication token using the provided client credentials.
-    products:OAuth2RefreshTokenGrantConfig testAuth = {
-        clientId: clientId,
-        clientSecret: clientSecret,
-        refreshToken: refreshToken,
-        credentialBearer: oauth2:POST_BODY_BEARER // Use POST_BODY_BEARER to send OAuth2 credentials in the request body.
+    hsproducts:OAuth2RefreshTokenGrantConfig auth = {
+        clientId,
+        clientSecret,
+        refreshToken,
+        credentialBearer: oauth2:POST_BODY_BEARER
     };
 
     // Initialize the HubSpot CRM client with the connection configuration and the service URL.
-    products:Client hubspotCrmObjectProducts = check new ({auth: testAuth});
+    hsproducts:Client hubSpotProducts = check new ({auth});
 
     // Create an empty BatchInput object to store updates for products.
-    products:BatchInputSimplePublicObjectBatchInput payload = {inputs: []};
+    hsproducts:BatchInputSimplePublicObjectBatchInput payload = {inputs: []};
 
     // Fetch all products from HubSpot using the GET method.
-    products:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubspotCrmObjectProducts->/;
+    hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubSpotProducts->/;
 
     // Iterate through each product in the response.
-    foreach products:SimplePublicObjectWithAssociations item in response.results {
+    foreach hsproducts:SimplePublicObjectWithAssociations item in response.results {
         io:println(item.properties); // Print product properties (fields).
 
         // Create a BatchInput object for each product to store potential updates.
-        products:SimplePublicObjectBatchInput line = {id: item.id, properties: {}};
+        hsproducts:SimplePublicObjectBatchInput line = {id: item.id, properties: {}};
 
         // Access the 'name' property of the product and check if it exists.
         string? name = item.properties.get("name");
@@ -102,7 +102,7 @@ public function main() returns error? {
     }
 
     // Perform a batch update request to update the products in HubSpot.
-    products:BatchResponseSimplePublicObject batch_response = check hubspotCrmObjectProducts->/batch/update.post(payload);
+    hsproducts:BatchResponseSimplePublicObject batch_response = check hubSpotProducts->/batch/update.post(payload);
 
     // Print the response from the batch update operation (to check the result).
     if batch_response.status == "COMPLETE" {
