@@ -158,10 +158,7 @@ mport ballerinax/hubspot.crm.obj.products as products;
        credentialBearer: oauth2:POST_BODY_BEARER
    };
 
-   products:ConnectionConfig hubSpotConfig = {
-      auth: testAuth
-   };
-   products:Client hubspotCrmObjectProducts = check new (hubSpotConfig);
+   products:Client hubspotCrmObjectProducts = check new ({auth: testAuth});
 
    ```
 

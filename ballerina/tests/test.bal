@@ -34,10 +34,6 @@ OAuth2RefreshTokenGrantConfig testAuth = {
 configurable string serviceUrl = ?;
 final string final_serviceUrl = isLiveServer ? serviceUrl : "http://localhost:9091";
 
-ConnectionConfig hubSpotConfig = {
-    auth: testAuth
-};
-
 Client hubspotCrmObjectProducts = test:mock(Client);
 
 string newId = "";
@@ -52,7 +48,7 @@ function setup() returns error? {
         io:println("Running tests on mock server");
     }
 
-    hubspotCrmObjectProducts = check new (hubSpotConfig, final_serviceUrl);
+    hubspotCrmObjectProducts = check new ({auth: testAuth}, final_serviceUrl);
 }
 
 // List a page of products

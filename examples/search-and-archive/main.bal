@@ -34,13 +34,8 @@ public function main() returns error? {
         credentialBearer: oauth2:POST_BODY_BEARER // Use POST_BODY_BEARER to send OAuth2 credentials in the request body.
     };
 
-    // Create the HubSpot connection configuration with the authentication details.
-    products:ConnectionConfig hubSpotConfig = {
-        auth: testAuth
-    };
-
     // Initialize the HubSpot CRM client with the connection configuration and the service URL.
-    products:Client hubspotCrmObjectProducts = check new (hubSpotConfig);
+    products:Client hubspotCrmObjectProducts = check new ({auth: testAuth});
 
     // Define the search payload to filter products with a price less than or equal to 500
     products:PublicObjectSearchRequest search_payload = {
