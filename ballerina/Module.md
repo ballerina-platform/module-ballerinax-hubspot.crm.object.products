@@ -2,9 +2,7 @@
 
 [HubSpot](https://www.hubspot.com/our-story) is an AI-powered customer relationship management (CRM) platform.
 
-The `ballerinax/hubspot.crm.obj.products` package offers APIs to connect and interact with [HubSpot API for CRM Object Products](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot CRM Object Products API v3 OpenAPI spec](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
-
-Use the products API to create and manage your product library, which is the collection of goods and services that your company offers. Products in your product library can be used as line items when creating deals, payment links, invoices, and quotes.
+The `ballerinax/hubspot.crm.obj.products` package offers APIs to connect and interact with [HubSpot API for CRM Object Products](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot CRM Object Products API v3 OpenAPI specification](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
 
 ## Setup guide
 
@@ -123,7 +121,7 @@ Import the `hubspot.crm.obj.products` module and `oauth2` module.
 
 ```ballerina
 import ballerina/oauth2;
-mport ballerinax/hubspot.crm.obj.products as products;
+mport ballerinax/hubspot.crm.obj.products as hsproducts;
 ```
 
 ### Step 2: Instantiate a new connector
@@ -136,22 +134,21 @@ mport ballerinax/hubspot.crm.obj.products as products;
     refreshToken = <Refresh Token>
    ```
 
-2. Instantiate a `OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
+2. Instantiate a `hsproducts:OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
 
    ```ballerina
    configurable string clientId = ?;
    configurable string clientSecret = ?;
    configurable string refreshToken = ?;
 
-   OAuth2RefreshTokenGrantConfig auth = {
+   hsproducts:OAuth2RefreshTokenGrantConfig auth = {
        clientId,
        clientSecret,
        refreshToken,
        credentialBearer: oauth2:POST_BODY_BEARER
    };
 
-   products:Client hubspotCrmObjectProducts = check new ({auth: testAuth});
-
+   hsproducts:Client hubSpotProducts = check new ({ auth });
    ```
 
 ### Step 3: Invoke the connector operation
