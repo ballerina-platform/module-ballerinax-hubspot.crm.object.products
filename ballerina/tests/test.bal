@@ -58,16 +58,13 @@ function setup() returns error? {
 // List a page of products
 @test:Config {dependsOn: [testCreateProducts], groups: ["live_tests", "mock_tests"]}
 function testListProducts() returns error? {
-    io:println("Listing products!");
     CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubspotCrmObjectProducts->/;
-    io:println(response);
     test:assertTrue(response?.results.length() > 0, "No products found.");
 }
 
 // Create a product with the given properties and return a copy of the object, including the ID. 
 @test:Config {groups: ["live_tests", "mock_tests"]}
 function testCreateProducts() returns error? {
-    io:println("Creating products!");
     SimplePublicObjectInputForCreate payload = {
         "properties": {
             "name": "Coffee Grinder",
@@ -77,15 +74,13 @@ function testCreateProducts() returns error? {
         }
     };
     SimplePublicObject response = check hubspotCrmObjectProducts->/.post(payload);
-    io:println(response);
     newId = response?.id;
-    test:assertTrue(response?.id == newId, "No products found.");
+    test:assertEquals(response?.id, newId, "No products found.");
 }
 
 // Perform a partial update of an Object identified by {productId}.
-@test:Config
+@test:Config {groups: ["live_tests", "mock_tests"]}
 function testUpdateProductProperties() returns error? {
-    io:println("Updating product properties!");
     SimplePublicObjectInput payload = {
         "properties": {
             "price": "600.00",
@@ -93,32 +88,26 @@ function testUpdateProductProperties() returns error? {
         }
     };
     SimplePublicObject response = check hubspotCrmObjectProducts->/[newId].patch(payload);
-    io:println(response);
     test:assertTrue(response?.id.length() > 0, "Error response received.");
 }
 
 // Read an Object identified by {productId}.
-@test:Config {dependsOn: [testUpdateProductProperties]}
+@test:Config {dependsOn: [testUpdateProductProperties], groups: ["live_tests", "mock_tests"]}
 function testReadProduct() returns error? {
-    io:println("Reading a product!");
     SimplePublicObjectWithAssociations response = check hubspotCrmObjectProducts->/[newId];
-    io:println(response);
     test:assertEquals(response?.id, newId);
 }
 
 // Move an Object identified by {productId} to the recycling bin.
-@test:Config {dependsOn: [testCreateProducts, testListProducts, testUpdateProductProperties, testReadProduct]}
+@test:Config {dependsOn: [testCreateProducts, testListProducts, testUpdateProductProperties, testReadProduct], groups: ["live_tests", "mock_tests"]}
 function testDeleteProduct() returns error? {
-    io:println("Deleting product!");
     http:Response response = check hubspotCrmObjectProducts->/[newId].delete();
-    io:println(response);
     test:assertEquals(response.statusCode, 204);
 }
 
 // Create a batch of products
-@test:Config
+@test:Config {groups: ["live_tests", "mock_tests"]}
 function testCreateBatch() returns error? {
-    io:println("Creating a batch of products!");
     BatchInputSimplePublicObjectInputForCreate payload = {
         inputs: [
             {
@@ -148,7 +137,6 @@ function testCreateBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicObject response = check hubspotCrmObjectProducts->/batch/create.post(payload);
-    io:println(response);
     test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
     foreach SimplePublicObject item in response.results {
         batchIds.push(item.id);
@@ -160,16 +148,15 @@ function testCreateBatch() returns error? {
 }
 
 // Archive a batch of products
-@test:Config {dependsOn: [testCreateBatch, testReadBatch, testSearchProduct, testUpdateBatch, testUpsertBatch]}
+@test:Config {dependsOn: [testCreateBatch, testReadBatch, testSearchProduct, testUpdateBatch, testUpsertBatch], groups: ["live_tests", "mock_tests"]}
 function testArchiveBatch() returns error? {
     BatchInputSimplePublicObjectId payload = {inputs};
     http:Response response = check hubspotCrmObjectProducts->/batch/archive.post(payload);
-    io:println("archive batch: ", response);
     test:assertEquals(response.statusCode, 204);
 }
 
 // Create or update a batch of products by unique property values
-@test:Config {dependsOn: [testCreateBatch]}
+@test:Config {dependsOn: [testCreateBatch], groups: ["live_tests", "mock_tests"]}
 function testUpsertBatch() returns error? {
     BatchInputSimplePublicObjectBatchInputUpsert payload = {
         inputs: [
@@ -193,12 +180,11 @@ function testUpsertBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicUpsertObject response = check hubspotCrmObjectProducts->/batch/upsert.post(payload);
-    io:println("Upsert batch: ", response);
     test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
 }
 
 // Read a batch of products by internal ID, or unique property values
-@test:Config
+@test:Config {groups: ["live_tests", "mock_tests"]}
 function testReadBatch() returns error? {
     BatchReadInputSimplePublicObjectId payload = {
         propertiesWithHistory: ["price", "description"],
@@ -206,12 +192,11 @@ function testReadBatch() returns error? {
         properties: ["name", "hs_sku"]
     };
     BatchResponseSimplePublicObject response = check hubspotCrmObjectProducts->/batch/read.post(payload);
-    io:println("Read Batch: ", response);
     test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
 }
 
 // Update a batch of products
-@test:Config {dependsOn: [testCreateBatch]}
+@test:Config {dependsOn: [testCreateBatch], groups: ["live_tests", "mock_tests"]}
 function testUpdateBatch() returns error? {
     BatchInputSimplePublicObjectBatchInput payload = {
         inputs: [
@@ -231,12 +216,11 @@ function testUpdateBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicObject response = check hubspotCrmObjectProducts->/batch/update.post(payload);
-    io:println("Update Batch: ", response);
     test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
 }
 
 // Search and filter products
-@test:Config
+@test:Config {groups: ["live_tests", "mock_tests"]}
 function testSearchProduct() returns error? {
     PublicObjectSearchRequest payload = {
         filterGroups: [
@@ -252,6 +236,5 @@ function testSearchProduct() returns error? {
         ]
     };
     CollectionResponseWithTotalSimplePublicObjectForwardPaging response = check hubspotCrmObjectProducts->/search.post(payload);
-    io:println("Search:", response);
     test:assertTrue(response?.total >= 0, "Error found");
 }
