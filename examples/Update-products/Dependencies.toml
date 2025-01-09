@@ -300,7 +300,7 @@ modules = [
 ]
 
 [[package]]
-org = "dinithil"
+org = "wso2"
 name = "Update_products"
 version = "0.1.0"
 dependencies = [
@@ -310,6 +310,6 @@ dependencies = [
 	{org = "ballerinax", name = "hubspot.crm.obj.products"}
 ]
 modules = [
-	{org = "dinithil", packageName = "Update_products", moduleName = "Update_products"}
+	{org = "wso2", packageName = "Update_products", moduleName = "Update_products"}
 ]
 

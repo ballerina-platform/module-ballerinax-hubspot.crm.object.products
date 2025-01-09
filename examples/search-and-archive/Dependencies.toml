@@ -304,7 +304,7 @@ modules = [
 ]
 
 [[package]]
-org = "dinithil"
+org = "wso2"
 name = "search_and_delete"
 version = "0.1.0"
 dependencies = [
@@ -315,6 +315,6 @@ dependencies = [
 	{org = "ballerinax", name = "hubspot.crm.obj.products"}
 ]
 modules = [
-	{org = "dinithil", packageName = "search_and_delete", moduleName = "search_and_delete"}
+	{org = "wso2", packageName = "search_and_delete", moduleName = "search_and_delete"}
 ]
 
