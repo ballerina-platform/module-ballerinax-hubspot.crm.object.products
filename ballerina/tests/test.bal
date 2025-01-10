@@ -15,7 +15,6 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/io;
 import ballerina/oauth2;
 import ballerina/test;
 
@@ -23,6 +22,7 @@ configurable boolean isLiveServer = ?;
 configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
+final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/objects/products" : "http://localhost:9090";
 
 OAuth2RefreshTokenGrantConfig testAuth = {
     clientId: clientId,
@@ -31,24 +31,28 @@ OAuth2RefreshTokenGrantConfig testAuth = {
     credentialBearer: oauth2:POST_BODY_BEARER // this line should be added in to when you are going to create auth object.
 };
 
-configurable string serviceUrl = ?;
-final string final_serviceUrl = isLiveServer ? serviceUrl : "http://localhost:9091";
-
-Client hubSpotProducts = test:mock(Client);
+Client hubSpotProducts = check new ({auth: testAuth}, serviceUrl);
 
 string newId = "";
 string[] batchIds = [];
 SimplePublicObjectId[] inputs = [];
 
 @test:BeforeSuite
-function setup() returns error? {
+function initClient() returns Client|error {
     if isLiveServer {
-        io:println("Running tests on actual server");
-    } else {
-        io:println("Running tests on mock server");
+        OAuth2RefreshTokenGrantConfig auth = {
+            clientId: clientId,
+            clientSecret: clientSecret,
+            refreshToken: refreshToken,
+            credentialBearer: oauth2:POST_BODY_BEARER
+        };
+        return check new ({auth}, serviceUrl);
     }
-
-    hubSpotProducts = check new ({auth: testAuth}, final_serviceUrl);
+    return check new ({
+        auth: {
+            token: "test-token"
+        }
+    }, serviceUrl);
 }
 
 // List a page of products
