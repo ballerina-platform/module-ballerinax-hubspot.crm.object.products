@@ -27,10 +27,6 @@ final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/objects/
 
 final Client hubSpotProducts = check initClient();
 
-string newId = "";
-string[] batchIds = [];
-SimplePublicObjectId[] inputs = [];
-
 @test:BeforeSuite
 function initClient() returns Client|error {
     if isLiveServer {
@@ -48,6 +44,10 @@ function initClient() returns Client|error {
         }
     }, serviceUrl);
 }
+
+string newId = "";
+string[] batchIds = [];
+SimplePublicObjectId[] inputs = [];
 
 @test:Config {
     dependsOn: [testCreateProducts],
