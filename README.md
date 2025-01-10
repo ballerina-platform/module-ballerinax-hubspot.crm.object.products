@@ -129,7 +129,7 @@ Import the `hubspot.crm.obj.products` module and `oauth2` module.
 
 ```ballerina
 import ballerina/oauth2;
-mport ballerinax/hubspot.crm.obj.products as hsproducts;
+import ballerinax/hubspot.crm.obj.products as hsproducts;
 ```
 
 ### Step 2: Instantiate a new connector
