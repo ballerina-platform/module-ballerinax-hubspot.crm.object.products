@@ -16,15 +16,8 @@
 // under the License.
 
 import ballerina/http;
-import ballerina/log;
 
-listener http:Listener httpListener = new (9091);
-
-http:Service mockService = service object {
-
-    # List
-    #
-    # + return - successful operation 
+service on new http:Listener(9090) {
     resource isolated function get .() returns CollectionResponseSimplePublicObjectWithAssociationsForwardPaging|http:Response => {
         "results": [
             {
@@ -44,9 +37,6 @@ http:Service mockService = service object {
         ]
     };
 
-    # Create
-    #
-    # + return - successful operation 
     resource isolated function post .(@http:Payload SimplePublicObjectInputForCreate payload) returns SimplePublicObject|http:Response => {
         "createdAt": "2025-01-08T05:47:44.605Z",
         "archived": false,
@@ -55,18 +45,12 @@ http:Service mockService = service object {
         "updatedAt": "2025-01-08T05:47:44.605Z"
     };
 
-    # Archive
-    #
-    # + return - No content 
     resource isolated function delete [string productId]() returns http:Response {
         http:Response obj = new;
         obj.statusCode = 204;
         return obj;
     };
 
-    # Read
-    #
-    # + return - successful operation 
     resource isolated function get [string productId]() returns SimplePublicObjectWithAssociations => {
         "createdAt": "2025-01-08T05:47:44.605Z",
         "archived": false,
@@ -75,9 +59,6 @@ http:Service mockService = service object {
         "updatedAt": "2025-01-08T05:47:44.605Z"
     };
 
-    # Update
-    #
-    # + return - successful operation 
     resource isolated function patch [string productId](@http:Payload SimplePublicObjectInput payload) returns SimplePublicObject => {
         "createdAt": "2025-01-09T07:18:05.905Z",
         "archived": false,
@@ -86,18 +67,12 @@ http:Service mockService = service object {
         "updatedAt": "2025-01-09T07:18:08.238Z"
     };
 
-    # Archive a batch of products by ID
-    #
-    # + return - No content 
     resource isolated function post batch/archive(@http:Payload BatchInputSimplePublicObjectId payload) returns http:Response {
         http:Response obj = new;
         obj.statusCode = 204;
         return obj;
     };
 
-    # Create a batch of products
-    #
-    # + return - successful operation 
     resource isolated function post batch/create(@http:Payload BatchInputSimplePublicObjectInputForCreate payload) returns BatchResponseSimplePublicObject => {
         "completedAt": "2025-01-09T07:18:03.849Z",
         "startedAt": "2025-01-09T07:18:03.640Z",
@@ -105,9 +80,6 @@ http:Service mockService = service object {
         "status": "COMPLETE"
     };
 
-    # Read a batch of products by internal ID, or unique property values
-    #
-    # + return - successful operation 
     resource isolated function post batch/read(@http:Payload BatchReadInputSimplePublicObjectId payload) returns BatchResponseSimplePublicObject => {
         "completedAt": "2025-01-09T07:18:06.939Z",
         "startedAt": "2025-01-09T07:18:06.928Z",
@@ -115,10 +87,6 @@ http:Service mockService = service object {
         "status": "COMPLETE"
     };
 
-    # Update a batch of products by internal ID, or unique property values
-    #
-    # + headers - Headers to be sent with the request 
-    # + return - successful operation 
     resource isolated function post batch/update(@http:Payload BatchInputSimplePublicObjectBatchInput payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicObject => {
         "completedAt": "2025-01-09T07:18:05.033Z",
         "startedAt": "2025-01-09T07:18:04.925Z",
@@ -126,10 +94,6 @@ http:Service mockService = service object {
         "status": "COMPLETE"
     };
 
-    # Create or update a batch of products by unique property values
-    #
-    # + headers - Headers to be sent with the request 
-    # + return - successful operation 
     resource isolated function post batch/upsert(@http:Payload BatchInputSimplePublicObjectBatchInputUpsert payload, map<string|string[]> headers = {}) returns BatchResponseSimplePublicUpsertObject => {
         "completedAt": "2025-01-09T07:18:05.522Z",
         "startedAt": "2025-01-09T07:18:05.421Z",
@@ -137,19 +101,8 @@ http:Service mockService = service object {
         "status": "COMPLETE"
     };
 
-    # + return - successful operation 
     resource isolated function post search(@http:Payload PublicObjectSearchRequest payload) returns CollectionResponseWithTotalSimplePublicObjectForwardPaging => {
         "total": 1,
         "results": [{"createdAt": "2025-01-03T09:26:50.490Z", "archived": false, "id": "18084920834", "properties": {"hs_lastmodifieddate": "2025-01-07T11:10:43.723Z", "price": "860.00", "hs_object_id": "18084920834", "name": "Cold Brew Maker", "createdate": "2025-01-03T09:26:50.490Z", "description": "A cold brew maker for brewing smooth and rich cold coffee at home."}, "updatedAt": "2025-01-07T11:10:43.723Z"}]
     };
 };
-
-function init() returns error? {
-    if isLiveServer {
-        log:printInfo("Skiping mock server initialization as the tests are running on live server");
-        return;
-    }
-    log:printInfo("Initiating mock server");
-    check httpListener.attach(mockService, "/");
-    check httpListener.'start();
-}
