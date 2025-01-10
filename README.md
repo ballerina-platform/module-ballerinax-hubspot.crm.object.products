@@ -167,7 +167,7 @@ Now, utilize the available connector operations. A sample usecase is shown below
 
 ```ballerina
 public function main() returns error? {
-  products: SimplePublicObjectInputForCreate payload = {
+    hsproducts:SimplePublicObjectInputForCreate payload = {
         "properties": {
             "name": "Coffee Grinder",
             "hs_sku": "CMK12346",
@@ -175,7 +175,7 @@ public function main() returns error? {
             "description": "A high-quality coffee grinder that powders excellent coffee."
         }
     };
-    products: SimplePublicObject response = check hubspotCrmObjectProducts->/.post(payload);
+    hsproducts:SimplePublicObject response = check hubSpotProducts->/.post(payload);
 }
 ```
 
