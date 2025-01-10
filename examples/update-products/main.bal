@@ -18,14 +18,12 @@ import ballerina/io;
 import ballerina/oauth2;
 import ballerinax/hubspot.crm.obj.products as hsproducts;
 
-// Configurable values for the API authentication and server details. 
 configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
 
 public function main() returns error? {
 
-    // OAuth2 configuration for refreshing the authentication token using the provided client credentials.
     hsproducts:OAuth2RefreshTokenGrantConfig auth = {
         clientId,
         clientSecret,
@@ -33,31 +31,23 @@ public function main() returns error? {
         credentialBearer: oauth2:POST_BODY_BEARER
     };
 
-    // Initialize the HubSpot CRM client with the connection configuration and the service URL.
     hsproducts:Client hubSpotProducts = check new ({auth});
 
-    // Create an empty BatchInput object to store updates for products.
     hsproducts:BatchInputSimplePublicObjectBatchInput payload = {inputs: []};
 
-    // Fetch all products from HubSpot using the GET method.
     hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubSpotProducts->/;
 
-    // Iterate through each product in the response.
     foreach hsproducts:SimplePublicObjectWithAssociations item in response.results {
-        io:println(item.properties); // Print product properties (fields).
+        io:println(item.properties);
 
-        // Create a BatchInput object for each product to store potential updates.
         hsproducts:SimplePublicObjectBatchInput line = {id: item.id, properties: {}};
 
-        // Access the 'name' property of the product and check if it exists.
         string? name = item.properties.get("name");
 
-        // If the 'name' property exists, prompt the user to decide if it should be changed.
         if name is string {
             io:println("Product name: ", name);
             io:println("Does this name need to change? (Y|N)");
 
-            // If the user wants to change the name, ask for the new name and update the product.
             if io:readln() == "Y" {
                 io:println("Enter new name:");
                 string new_name = io:readln();
@@ -65,15 +55,12 @@ public function main() returns error? {
             }
         }
 
-        // Access the 'price' property of the product and check if it exists.
         string? price = item.properties.get("price");
 
-        // If the 'price' property exists, prompt the user to decide if it should be changed.
         if price is string {
             io:println("Product Price: ", price);
             io:println("Does this price need to change? (Y|N)");
 
-            // If the user wants to change the price, ask for the new price and update the product.
             if io:readln() == "Y" {
                 io:println("Enter new price:");
                 string new_price = io:readln();
@@ -81,15 +68,12 @@ public function main() returns error? {
             }
         }
 
-        // Access the 'description' property of the product and check if it exists.
         string? description = item.properties.get("description");
 
-        // If the 'description' property exists, prompt the user to decide if it should be changed.
         if description is string {
             io:println("Product description: ", description);
             io:println("Does this description need to change? (Y|N)");
 
-            // If the user wants to change the description, ask for the new description and update the product.
             if io:readln() == "Y" {
                 io:println("Enter new description:");
                 string new_description = io:readln();
@@ -97,14 +81,11 @@ public function main() returns error? {
             }
         }
 
-        // Add the updated product information to the payload (batch update).
         payload.inputs.push(line);
     }
 
-    // Perform a batch update request to update the products in HubSpot.
     hsproducts:BatchResponseSimplePublicObject batch_response = check hubSpotProducts->/batch/update.post(payload);
 
-    // Print the response from the batch update operation (to check the result).
     if batch_response.status == "COMPLETE" {
         io:println("Successfully updated the response.");
     }
