@@ -16,22 +16,16 @@
 
 import ballerina/http;
 import ballerina/oauth2;
+import ballerina/os;
 import ballerina/test;
 
-configurable boolean isLiveServer = ?;
-configurable string clientId = ?;
-configurable string clientSecret = ?;
-configurable string refreshToken = ?;
+final boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
+final string clientId = os:getEnv("HUBSPOT_CLIENT_ID");
+final string clientSecret = os:getEnv("HUBSPOT_CLIENT_SECRET");
+final string refreshToken = os:getEnv("HUBSPOT_REFRESH_TOKEN");
 final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/objects/products" : "http://localhost:9090";
 
-OAuth2RefreshTokenGrantConfig testAuth = {
-    clientId: clientId,
-    clientSecret: clientSecret,
-    refreshToken: refreshToken,
-    credentialBearer: oauth2:POST_BODY_BEARER // this line should be added in to when you are going to create auth object.
-};
-
-Client hubSpotProducts = check new ({auth: testAuth}, serviceUrl);
+final Client hubSpotProducts = check initClient();
 
 string newId = "";
 string[] batchIds = [];
@@ -55,17 +49,15 @@ function initClient() returns Client|error {
     }, serviceUrl);
 }
 
-// List a page of products
 @test:Config {
     dependsOn: [testCreateProducts],
     groups: ["live_tests", "mock_tests"]
 }
 function testListProducts() returns error? {
     CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubSpotProducts->/;
-    test:assertTrue(response?.results.length() > 0, "No products found.");
+    test:assertTrue(response?.results.length() > 0);
 }
 
-// Create a product with the given properties and return a copy of the object, including the ID. 
 @test:Config {
     groups: ["live_tests", "mock_tests"]
 }
@@ -80,10 +72,9 @@ function testCreateProducts() returns error? {
     };
     SimplePublicObject response = check hubSpotProducts->/.post(payload);
     newId = response?.id;
-    test:assertTrue(response?.id.length() > 0, "Error response received.");
+    test:assertTrue(response?.id.length() > 0);
 }
 
-// Perform a partial update of an Object identified by {productId}.
 @test:Config {
     groups: ["live_tests", "mock_tests"]
 }
@@ -95,10 +86,9 @@ function testUpdateProductProperties() returns error? {
         }
     };
     SimplePublicObject response = check hubSpotProducts->/[newId].patch(payload);
-    test:assertTrue(response?.id.length() > 0, "Error response received.");
+    test:assertTrue(response?.id.length() > 0);
 }
 
-// Read an Object identified by {productId}.
 @test:Config {
     dependsOn: [testUpdateProductProperties],
     groups: ["live_tests", "mock_tests"]
@@ -108,7 +98,6 @@ function testReadProduct() returns error? {
     test:assertEquals(response?.id, newId);
 }
 
-// Move an Object identified by {productId} to the recycling bin.
 @test:Config {
     dependsOn: [testCreateProducts, testListProducts, testUpdateProductProperties, testReadProduct],
     groups: ["live_tests", "mock_tests"]
@@ -118,7 +107,6 @@ function testDeleteProduct() returns error? {
     test:assertEquals(response.statusCode, 204);
 }
 
-// Create a batch of products
 @test:Config {
     groups: ["live_tests", "mock_tests"]
 }
@@ -152,7 +140,7 @@ function testCreateBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicObject response = check hubSpotProducts->/batch/create.post(payload);
-    test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
+    test:assertTrue(response?.completedAt.length() > 0);
     foreach SimplePublicObject item in response.results {
         batchIds.push(item.id);
     }
@@ -162,7 +150,6 @@ function testCreateBatch() returns error? {
     }
 }
 
-// Archive a batch of products
 @test:Config {
     dependsOn: [testCreateBatch, testReadBatch, testSearchProduct, testUpdateBatch, testUpsertBatch],
     groups: ["live_tests", "mock_tests"]
@@ -173,7 +160,6 @@ function testArchiveBatch() returns error? {
     test:assertEquals(response.statusCode, 204);
 }
 
-// Create or update a batch of products by unique property values
 @test:Config {
     dependsOn: [testCreateBatch],
     groups: ["live_tests", "mock_tests"]
@@ -201,10 +187,9 @@ function testUpsertBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicUpsertObject response = check hubSpotProducts->/batch/upsert.post(payload);
-    test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
+    test:assertTrue(response?.completedAt.length() > 0);
 }
 
-// Read a batch of products by internal ID, or unique property values
 @test:Config {
     groups: ["live_tests", "mock_tests"]
 }
@@ -215,10 +200,9 @@ function testReadBatch() returns error? {
         properties: ["name", "hs_sku"]
     };
     BatchResponseSimplePublicObject response = check hubSpotProducts->/batch/read.post(payload);
-    test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
+    test:assertTrue(response?.completedAt.length() > 0);
 }
 
-// Update a batch of products
 @test:Config {
     dependsOn: [testCreateBatch],
     groups: ["live_tests", "mock_tests"]
@@ -242,10 +226,9 @@ function testUpdateBatch() returns error? {
         ]
     };
     BatchResponseSimplePublicObject response = check hubSpotProducts->/batch/update.post(payload);
-    test:assertTrue(response?.completedAt.length() > 0, "Error response received.");
+    test:assertTrue(response?.completedAt.length() > 0);
 }
 
-// Search and filter products
 @test:Config {
     groups: ["live_tests", "mock_tests"]
 }
@@ -264,5 +247,5 @@ function testSearchProduct() returns error? {
         ]
     };
     CollectionResponseWithTotalSimplePublicObjectForwardPaging response = check hubSpotProducts->/search.post(payload);
-    test:assertTrue(response?.total >= 0, "Error found");
+    test:assertTrue(response?.total >= 0);
 }
