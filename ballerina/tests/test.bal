@@ -27,7 +27,6 @@ final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/objects/
 
 final Client hubSpotProducts = check initClient();
 
-@test:BeforeSuite
 function initClient() returns Client|error {
     if isLiveServer {
         OAuth2RefreshTokenGrantConfig auth = {
