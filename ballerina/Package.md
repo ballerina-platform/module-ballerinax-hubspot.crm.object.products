@@ -70,7 +70,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
    Replace the **YOUR_CLIENT_ID**, **YOUR_REDIRECT_URI** and **YOUR_SCOPES** with your specific value.
 
-   **NOTE:** _If you are using a localhost redirect url, make sure to have a listener running at the relevant port before executing the next step._
+   **Note:** _If you are using a localhost redirect url, make sure to have a listener running at the relevant port before executing the next step._
 
 2. Paste it in the browser and select your developer test account to install the app when prompted.
 
@@ -78,7 +78,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
 3. A code will be displayed in the browser. Copy the code.
 
-4. Run the following curl command. Replace the **YOUR_CLIENT_ID**, **YOUR_REDIRECT_URI** and **YOUR_CLIENT_SECRET** with your specific value. Use the code you received in the above step 3 as the **CODE**.
+4. Run the following curl command. Replace the **YOUR_CLIENT_ID**, **YOUR_REDIRECT_URI** and **YOUR_CLIENT_SECRET** with your specific values. Use the code you received in the above step 3 as the **CODE**.
 
    - Linux/macOS
 
