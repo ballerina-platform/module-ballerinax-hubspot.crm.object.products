@@ -290,9 +290,8 @@ name = "hubspot.crm.obj.products"
 version = "1.0.0"
 dependencies = [
 	{org = "ballerina", name = "http"},
-	{org = "ballerina", name = "io"},
-	{org = "ballerina", name = "log"},
 	{org = "ballerina", name = "oauth2"},
+	{org = "ballerina", name = "os"},
 	{org = "ballerina", name = "url"},
 	{org = "ballerinai", name = "observe"}
 ]
