@@ -1,16 +1,16 @@
 [package]
 distribution = "2201.10.0"
 org = "ballerinax"
-name = "hubspot.crm.object.products"
-version = "0.1.0"
+name = "hubspot.crm.obj.products"
+version = "1.0.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = []
-# icon = "icon.png" # TODO: update icon.png
+keywords = ["Hubspot", "CRM", "Object", "Products"] 
+icon = "icon.png" 
 repository = "https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products"
 
 [build-options]
 observabilityIncluded = true
 
-[platform.java21]
+[platform.java17]
 graalvmCompatible = true
