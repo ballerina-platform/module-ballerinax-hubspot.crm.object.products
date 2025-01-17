@@ -47,20 +47,20 @@ public function main() returns error? {
 
     hsproducts:BatchInputSimplePublicObjectBatchInput payload = {inputs: []};
 
-    hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging getResponse = check hubSpotProducts->/;
+    hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging productsResponse = check hubSpotProducts->/;
 
-    foreach hsproducts:SimplePublicObjectWithAssociations item in getResponse.results {
-        io:println(item.properties);
+    foreach hsproducts:SimplePublicObjectWithAssociations product in productsResponse.results {
+        io:println(product.properties);
 
-        hsproducts:SimplePublicObjectBatchInput line = {id: item.id, properties: {}};
+        hsproducts:SimplePublicObjectBatchInput line = {id: product.id, properties: {}};
 
-        string? name = item.properties.get("name");
+        string? name = product.properties.get("name");
         line.properties["name"] = check updateProductField("Product name", name);
 
-        string? price = item.properties.get("price");
+        string? price = product.properties.get("price");
         line.properties["price"] = check updateProductField("Product price", price);
 
-        string? description = item.properties.get("description");
+        string? description = product.properties.get("description");
         line.properties["description"] = check updateProductField("Product description", description);
 
         payload.inputs.push(line);
