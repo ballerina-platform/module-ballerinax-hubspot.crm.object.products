@@ -18,13 +18,13 @@ To use the HubSpot CRM Object Products connector, you must have access to the Hu
 
 ### Step 1: Create/Login to a HubSpot Developer Account
 
-If you already have an account, go to the [HubSpot developer portal](https://app.hubspot.com/)
+If you already have an account, go to the [HubSpot developer portal](https://app.hubspot.com/).
 
-If you don't have a HubSpot Developer Account, you can sign up to a free account [here](https://developers.hubspot.com/get-started)
+If you don't have a HubSpot Developer Account, you can sign up to a free account [here](https://developers.hubspot.com/get-started).
 
-### Step 2 (Optional): Create a [Developer Test Account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) under your account
+### Step 2 (Optional): Create a Developer Test Account under your account
 
-Within app developer accounts, you can create developer test accounts to test apps and integrations without affecting any real HubSpot data.
+Within app developer accounts, you can create [Developer Test Account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) to test apps and integrations without affecting any real HubSpot data.
 
 **Note:** _These accounts are intended only for development and testing purposes and should not be used production environments._
 

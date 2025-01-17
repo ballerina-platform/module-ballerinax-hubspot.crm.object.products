@@ -22,8 +22,20 @@ configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
 
-public function main() returns error? {
+function updateProductField(string fieldName, string? currentValue) returns string? {
+    if currentValue is string {
+        io:println(fieldName, ": ", currentValue);
+        io:println("Does this ", fieldName, " need to change? (Y|N)");
 
+        if io:readln() == "Y" {
+            io:println("Enter new ", fieldName, ":");
+            return io:readln();
+        }
+    }
+    return currentValue; // Return the original value if no update is needed
+}
+
+public function main() returns error? {
     hsproducts:OAuth2RefreshTokenGrantConfig auth = {
         clientId,
         clientSecret,
@@ -35,58 +47,29 @@ public function main() returns error? {
 
     hsproducts:BatchInputSimplePublicObjectBatchInput payload = {inputs: []};
 
-    hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging response = check hubSpotProducts->/;
+    hsproducts:CollectionResponseSimplePublicObjectWithAssociationsForwardPaging productsResponse = check hubSpotProducts->/;
 
-    foreach hsproducts:SimplePublicObjectWithAssociations item in response.results {
-        io:println(item.properties);
+    foreach hsproducts:SimplePublicObjectWithAssociations product in productsResponse.results {
+        io:println(product.properties);
 
-        hsproducts:SimplePublicObjectBatchInput line = {id: item.id, properties: {}};
+        hsproducts:SimplePublicObjectBatchInput line = {id: product.id, properties: {}};
 
-        string? name = item.properties.get("name");
+        string? name = product.properties.get("name");
+        line.properties["name"] = check updateProductField("Product name", name);
 
-        if name is string {
-            io:println("Product name: ", name);
-            io:println("Does this name need to change? (Y|N)");
+        string? price = product.properties.get("price");
+        line.properties["price"] = check updateProductField("Product price", price);
 
-            if io:readln() == "Y" {
-                io:println("Enter new name:");
-                string new_name = io:readln();
-                line.properties["name"] = new_name;
-            }
-        }
-
-        string? price = item.properties.get("price");
-
-        if price is string {
-            io:println("Product Price: ", price);
-            io:println("Does this price need to change? (Y|N)");
-
-            if io:readln() == "Y" {
-                io:println("Enter new price:");
-                string new_price = io:readln();
-                line.properties["price"] = new_price;
-            }
-        }
-
-        string? description = item.properties.get("description");
-
-        if description is string {
-            io:println("Product description: ", description);
-            io:println("Does this description need to change? (Y|N)");
-
-            if io:readln() == "Y" {
-                io:println("Enter new description:");
-                string new_description = io:readln();
-                line.properties["description"] = new_description;
-            }
-        }
+        string? description = product.properties.get("description");
+        line.properties["description"] = check updateProductField("Product description", description);
 
         payload.inputs.push(line);
     }
 
-    hsproducts:BatchResponseSimplePublicObject batch_response = check hubSpotProducts->/batch/update.post(payload);
+    hsproducts:BatchResponseSimplePublicObject batchResponse = check hubSpotProducts->/batch/update.post(payload);
 
-    if batch_response.status == "COMPLETE" {
+    if batchResponse.status == "COMPLETE" {
         io:println("Successfully updated the response.");
     }
 }
+

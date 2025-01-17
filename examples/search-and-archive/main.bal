@@ -48,18 +48,18 @@ public function main() returns error? {
         ]
     };
 
-    hsproducts:CollectionResponseWithTotalSimplePublicObjectForwardPaging search_response = check hubSpotProducts->/search.post(search_payload);
+    hsproducts:CollectionResponseWithTotalSimplePublicObjectForwardPaging searchResponse = check hubSpotProducts->/search.post(search_payload);
 
     hsproducts:SimplePublicObjectId[] inputs = [];
 
-    foreach hsproducts:SimplePublicObject line in search_response.results {
+    foreach hsproducts:SimplePublicObject line in searchResponse.results {
         hsproducts:SimplePublicObjectId newRecord = {id: line.id};
         inputs.push(newRecord);
     }
 
-    hsproducts:BatchInputSimplePublicObjectId archive_payload = {inputs};
+    hsproducts:BatchInputSimplePublicObjectId archivePayload = {inputs};
 
-    http:Response response = check hubSpotProducts->/batch/archive.post(archive_payload);
+    http:Response response = check hubSpotProducts->/batch/archive.post(archivePayload);
 
     if response.statusCode == 204 {
         io:println("Archived successfully");
