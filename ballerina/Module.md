@@ -173,8 +173,8 @@ public function main() returns error? {
 
 ## Examples
 
-The `Ballerina HubSpot CRM Products Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/), covering the following use cases:
+The `Ballerina HubSpot CRM Products Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/), covering the following use cases:
 
-1. [Update Batch of Products](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/Update-products) - Integrate Ballerina Hubspot CRM Products Connector to update the properties of a batch of products.
+1. [Update Batch of Products](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/update-products) - Integrate Ballerina Hubspot CRM Products Connector to update the properties of a batch of products.
 
-2. [Filter and Archive Batch](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/search-and-archive) - Integrate Ballerina Hubspot CRM Products Connector to filter products based on the price and then archive the batch.
+2. [Filter and Archive Batch](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/search-and-archive) - Integrate Ballerina Hubspot CRM Products Connector to filter products based on the price and then archive the batch.
