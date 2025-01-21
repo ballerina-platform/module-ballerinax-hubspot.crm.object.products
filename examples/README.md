@@ -1,10 +1,10 @@
 # Examples
 
-The `ballerinax/hubspot.crm.object.products` connector provides practical examples illustrating usage in various scenarios.
+The `ballerinax/hubspot.crm.obj.products` connector provides practical examples illustrating usage in various scenarios.
 
 [//]: # (TODO: Add examples)
-1. 
-2. 
+1.
+2.
 
 ## Prerequisites
 
