@@ -26,7 +26,7 @@ If you don't have a HubSpot Developer Account, you can sign up to a free account
 
 Within app developer accounts, you can create [Developer Test Account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) to test apps and integrations without affecting any real HubSpot data.
 
-**Note:** _These accounts are intended only for development and testing purposes and should not be used production environments._
+> **Note:** These accounts are intended only for development and testing purposes and should not be used production environments.
 
 1. Go to 'Test Account' section from the left sidebar.
 
@@ -181,11 +181,11 @@ public function main() returns error? {
 
 ## Examples
 
-The `Ballerina HubSpot CRM Products Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/), covering the following use cases:
+The `Ballerina HubSpot CRM Products Connector` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/), covering the following use cases:
 
-1. [Update Batch of Products](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/Update-products) - Integrate Ballerina HubSpot CRM Products Connector to update the properties of a batch of products.
+1. [Update Batch of Products](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/update-products) - Integrate Ballerina HubSpot CRM Products Connector to update the properties of a batch of products.
 
-2. [Filter and Archive Batch](https://github.com/module-ballerinax-hubspot.crm.object.products/tree/main/examples/search-and-archive) - Integrate Ballerina HubSpot CRM Products Connector to filter products based on the price and then archive the batch.
+2. [Filter and Archive Batch](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.object.products/tree/main/examples/search-and-archive) - Integrate Ballerina HubSpot CRM Products Connector to filter products based on the price and then archive the batch.
 
 ## Build from the source
 
