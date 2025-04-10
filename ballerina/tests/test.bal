@@ -14,7 +14,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/http;
 import ballerina/oauth2;
 import ballerina/os;
 import ballerina/test;
@@ -102,8 +101,8 @@ function testReadProduct() returns error? {
     groups: ["live_tests", "mock_tests"]
 }
 function testDeleteProduct() returns error? {
-    http:Response response = check hubSpotProducts->/[newId].delete();
-    test:assertEquals(response.statusCode, 204);
+    error? response = hubSpotProducts->/[newId].delete();
+    test:assertEquals(response, ());
 }
 
 @test:Config {
@@ -155,8 +154,8 @@ function testCreateBatch() returns error? {
 }
 function testArchiveBatch() returns error? {
     BatchInputSimplePublicObjectId payload = {inputs};
-    http:Response response = check hubSpotProducts->/batch/archive.post(payload);
-    test:assertEquals(response.statusCode, 204);
+    error? response = hubSpotProducts->/batch/archive.post(payload);
+    test:assertEquals(response, ());
 }
 
 @test:Config {
