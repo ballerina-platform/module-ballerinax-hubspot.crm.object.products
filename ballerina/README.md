@@ -1,8 +1,15 @@
 ## Overview
 
-[HubSpot](https://www.hubspot.com/our-story) is an AI-powered customer relationship management (CRM) platform.
+[HubSpot](https://www.hubspot.com) is an AI-powered customer relationship management (CRM) platform.
 
-The `ballerinax/hubspot.crm.obj.products` package offers APIs to connect and interact with [HubSpot CRM Object Products API](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on [HubSpot REST API v3](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Products/Rollouts/424/v3/products.json).
+The HubSpot CRM Products connector provides APIs to connect and interact with the [HubSpot CRM Products API](https://developers.hubspot.com/docs/reference/api/crm/objects/products) endpoints, specifically based on the [HubSpot REST API v3](https://developers.hubspot.com/docs/reference/api).
+
+### Key Features
+
+- Create, read, update, and delete product records in HubSpot CRM
+- List and search products with filtering support
+- Batch operations for bulk product updates and archiving
+- Manage product properties such as name, SKU, price, and description
 
 ## Setup guide
 
